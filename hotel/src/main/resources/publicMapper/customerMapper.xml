@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+ <!-- 170912 create = limitationOne  -->
+ 
+<mapper namespace="com.publicMapper.ICustomerPublicMapper">
+	
+	<resultMap id="guestVo" type="com.model.Tbl_hotel_guest_user_infoVo">
+		<result column="guest_no"		property="guest_no"/>
+		<result column="hotel_no"		property="hotel_no"/>
+		<result column="guest_id"		property="guest_id"/>
+		<result column="guest_nm"		property="guest_nm"/>
+		<result column="guest_pwd"		property="guest_pwd"/>
+		<result column="guest_email"	property="guest_email"/>
+		<result column="insert_dt"		property="insert_dt"/>
+		<result column="update_dt"		property="update_dt"/>
+		<result column="guest_draw"	property="guest_draw"/>
+	</resultMap>
+	
+	<resultMap id="roomVo" type="com.model.Tbl_hotel_room_infoVo">
+		<result column="u_no"						property="u_no"/>
+		<result column="no"							property="no"/>
+		<result column="room_name"			property="room_name"/>
+		<result column="room_use_yn"		property="room_use_yn"/>
+		<result column="room_money"			property="room_money"/>
+		<result column="room_people_rule"	property="room_people_rule"/>
+		<result column="room_position"		property="room_position"/>
+		<result column="room_bed_type"		property="room_bed_type"/>
+		<result column="room_comp"			property="room_comp"/>
+		<result column="room_info"				property="room_info"/>
+		<result column="room_service"		property="room_service"/>
+	</resultMap>
+	
+	<resultMap id="ReservationMapVo" type="com.model.ReservationMapVo">
+		<association property="guestVo" resultMap="guestVo"/>
+		<association property="roomVo" resultMap="roomVo"/>
+	</resultMap>
+	
+	<!-- custList -->
+	<select id="custList" resultType="com.model.Tbl_hotel_guest_user_infoVo">
+		SELECT * FROM tbl_hotel_guest_user_info
+				<where>
+					<if test="true">hotel_no=#{hotel_no}</if>
+					<if test="searchType == 'id'.toString()">AND guest_id LIKE #{searchValue}</if>
+					<if test="searchType == 'name'.toString()">AND guest_nm LIKE #{searchValue}</if>
+					<if test="searchType == 'email'.toString()">AND guest_email LIKE #{searchValue}</if>
+					<if test="searchType == '#'.toString()">
+							AND guest_nm LIKE #{searchValue} 
+							OR hotel_no=#{hotel_no} AND guest_id LIKE #{searchValue} 
+							OR hotel_no=#{hotel_no} AND guest_email LIKE #{searchValue}
+					</if>
+				</where>
+			ORDER BY guest_no DESC
+	</select>
+	
+	<!-- search custList -->
+	<!-- 
+	<select id="searchCustList" parameterType="com.model.CustomerSearchVo" resultType="com.model.CustomerVo">
+		SELECT * FROM customer 
+			<where>
+				<if test="true">hotel_seq=#{hotel_seq}</if>
+				<if test="searchType == 'name'.toString()">AND cust_name LIKE #{searchValue}</if>
+				<if test="searchType == 'phone'.toString()">AND cust_phone LIKE #{searchValue}</if>
+				<if test="searchType == 'email'.toString()">AND cust_email LIKE #{searchValue}</if>
+				<if test="searchType == '#'.toString()">
+						AND cust_name LIKE #{searchValue} 
+						OR hotel_seq=#{hotel_seq} AND cust_phone LIKE #{searchValue} 
+						OR hotel_seq=#{hotel_seq} AND cust_email LIKE #{searchValue}
+				</if>
+			</where>
+	</select>
+	-->
+	
+	<!-- customer create -->
+	<insert id="cmCreate" parameterType="com.model.Tbl_hotel_guest_user_infoVo">
+		INSERT INTO tbl_hotel_guest_user_info (hotel_no, guest_nm, guest_pwd, guest_id, guest_email, insert_dt) 
+				VALUES (#{hotel_no}, #{guest_nm}, #{guest_pwd}, #{guest_id}, #{guest_email}, current_date)
+	</insert>
+	
+	<!--
+	<insert id="cmCreate" parameterType="com.model.CustomerVo">
+		INSERT INTO customer (hotel_seq, cust_name, cust_pw, cust_phone, cust_email, cust_rating, signup_date) 
+			VALUES (#{hotel_seq}, #{cust_name}, #{cust_pw}, #{cust_phone}, #{cust_email}, #{cust_rating}, current_date)
+	</insert>
+	-->
+	
+	<!-- custommer info -->
+	<select id="getCustomer" parameterType="int" resultType="com.model.Tbl_hotel_guest_user_infoVo">
+		SELECT * FROM tbl_hotel_guest_user_info WHERE guest_no=#{cust_seq}
+	</select>
+	
+	<!-- customer update -->
+	<update id="cmUpdate" parameterType="com.model.CustomerVo">
+		UPDATE customer 
+			SET cust_name=#{cust_name, jdbcType=VARCHAR}, cust_pw=#{cust_pw, jdbcType=VARCHAR}, cust_phone=#{cust_phone, jdbcType=VARCHAR}, cust_email=#{cust_email, jdbcType=VARCHAR}, cust_rating=#{cust_rating, jdbcType=VARCHAR}
+				WHERE cust_seq=#{cust_seq}
+	</update>
+	
+	
+	<!-- 예약문의등록 고객찾기 -->
+	<select id="searchCustomer" parameterType="com.model.CustomerSearchVo" resultType="com.model.Tbl_hotel_guest_user_infoVo">
+		SELECT * FROM tbl_hotel_guest_user_info 
+			<where>
+				<if test="searchType == 'name'.toString()">
+					guest_nm LIKE #{searchValue}
+				</if>
+				<if test="searchType == 'id'.toString()">
+					guest_id LIKE #{searchValue}
+				</if>
+				<if test="searchType == 'email'.toString()">
+					guest_email LIKE #{searchValue}
+				</if>
+			</where>
+			AND hotel_no=#{hotel_no}
+	</select>
+	
+	<!-- 예약문의 목록을 위한 고객정보 리스트 -->
+	<select id="reservation" parameterType="int" resultType="com.model.Tbl_hotel_guest_user_infoVo">
+		SELECT * FROM tbl_hotel_guest_user_info 
+				<where>
+					<if test="true">hotel_no=#{hotel_seq}</if>
+					<if test="valueType == 'name'.toString()">AND guest_nm LIKE #{searchValue}</if>
+					<if test="valueType == 'id'.toString()">AND guest_id LIKE #{searchValue}</if>
+				</where>
+	</select>
+	
+	<!-- 예약문의 목록을 위한 객실정보 리스트 -->
+	<select id="reservationHrmList" parameterType="int" resultType="com.model.Tbl_hotel_room_infoVo">
+		SELECT * FROM tbl_hotel_room_info WHERE u_no=#{hotelSeq}
+	</select>
+	
+	<!-- 예약문의 상세정보 보기용 -->
+	<select id="reservationInfo" parameterType="com.model.ReservationCusVo" resultMap="ReservationMapVo">
+		SELECT * FROM Tbl_hotel_guest_user_info g, Tbl_hotel_room_info r 
+				WHERE g.guest_no=#{cust_seq} AND g.hotel_no=#{hotel_seq} AND r.no=#{hrm_seq}
+	</select>
+	
+	
+	<!-- 픽드랍서비스 등록 - 투숙객찾기 -->
+	<select id="pickdropGuestList" parameterType="com.model.CustomerSearchVo" resultType="com.model.Tbl_hotel_guest_user_infoVo">
+		SELECT * FROM Tbl_hotel_guest_user_info c 
+			<where>
+				<if test="searchType == 'name'.toString()">
+					c.guest_nm LIKE #{searchValue}
+				</if>
+				<if test="searchType == 'id'.toString()">
+					c.guest_id LIKE #{searchValue}
+				</if>
+				<if test="searchType == 'email'.toString()">
+					c.guest_email LIKE #{searchValue}
+				</if>
+			</where>
+	</select>
+	
+</mapper>

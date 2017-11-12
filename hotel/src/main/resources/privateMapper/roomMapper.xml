@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.privateMapper.IRoomMapper">
+	
+    <select id="selectReqChatInfo" parameterType="com.model.RoomVo" resultType="com.model.RoomVo">
+    	select * 
+    	from public.tbl_hotel_chat_info
+    	where 
+    		room_no = #{room_no}
+    </select>
+    
+	<insert id="roomTxtChatCreate" parameterType="com.model.RoomVo" >
+		INSERT INTO public.tbl_hotel_chat_info(
+			room_create_id, 
+			room_invite_id, 
+			room_gubun, 
+			insert_dt, 
+			room_title,
+			room_recive,
+			hotel_no
+		)
+		values(
+			#{room_create_id}, 
+			#{room_invite_id}, 
+			#{room_gubun}, 
+			now(), 
+			#{room_title},
+			'N',
+			#{hotel_no}
+		)
+	</insert>
+	
+	<insert id="roomTxtChatCreateHistory" parameterType="com.model.RoomVo" >
+		INSERT INTO public.tbl_hotel_chat_info_history
+		SELECT * FROM public.tbl_hotel_chat_info 
+		<where>
+			room_create_id = #{room_create_id}
+		</where>
+	</insert>
+	
+	<update id="roomTxtDelete" parameterType="com.model.RoomVo">
+	DELETE  FROM public.tbl_hotel_chat_info 
+		<where>
+			room_create_id = #{room_create_id}
+		</where>
+	</update>
+	
+</mapper>	

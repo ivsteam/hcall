@@ -1,0 +1,28 @@
+.pageLayer { margin: 0 0 40px 0; }
+
+.message { 
+	color: red;
+	font-size: 12px;
+	display: block; 
+	margin-bottom: 10px;
+}
+
+.cmCreate { 
+	background: #3d586d;
+	color: white;
+	font-weight: bold;
+	margin-left: 180px;
+}
+.cmCreateDiv b { 
+	font-weight: bold;
+	padding: 0px 15px;
+}
+.cmCreateDiv ul { display: inline-table; }
+.cmCreateDiv li { height: 32px }
+
+.btn {
+    color: white;
+    font-weight: bold;
+}
+.cmCreate { background: #c68d7f; }
+.cmCreateCanCel { background: #3d586d;; }

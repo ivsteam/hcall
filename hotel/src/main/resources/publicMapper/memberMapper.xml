@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    
+    
+<mapper namespace="com.publicMapper.IMemberMapper">
+	<select id="selectDupCheckID" resultType="Integer">
+	    SELECT count(*) FROM tbl_hotel_guest_user_info WHERE guest_Id = #{guestId}
+	</select>
+	
+	<select id="selectOne" resultType="com.model.MemberVo">
+	    SELECT * FROM tbl_hotel_guest_user_info WHERE guest_Id = #{guestId}
+	</select>
+	
+	
+	<insert id="insertMember" parameterType="com.model.MemberVo">
+        INSERT 
+        	INTO tbl_hotel_guest_user_info
+        	( 
+		         hotel_no,
+		         guest_id,
+		         guest_nm,
+		         guest_pwd,
+		         guest_email,
+		         insert_dt,
+		         update_dt,
+		         guest_draw
+        	) 
+        	VALUES(
+		        #{hotelNo},
+		        #{guestId},
+		        #{guestNm},
+		        #{guestPwd},
+		        #{guestEmail},
+		        #{insert_dt},
+		        #{update_dt},
+		        'N'
+	        )
+    </insert>
+	
+	
+	
+	
+	<!-- ================================================================================================= -->
+	
+	
+	
+	
+	<update id="updateMemberDraw" parameterType="com.model.MemberVo">
+        UPDATE MEMBER
+        <set>
+        	memDrawYn = 'Y',
+        	lastDate = now()
+        </set>
+        <where>
+	        memId = #{memId}
+	        and memPw = #{memPw}
+        </where>
+    </update>
+    	
+	
+	<select id="selectFindUserPw" resultType="com.model.MemberVo">
+	    SELECT * 
+	    FROM MEMBER 
+	    WHERE 
+	    	memEmail = #{memEmail}
+	    	and memNm = #{memNm}
+	</select>
+	
+	
+	<select id="selectPersionInfo" resultType="com.model.MemberVo">
+	    SELECT * 
+	    FROM MEMBER 
+	    WHERE 
+	    	memEmail = #{memEmail}
+	    	and memPw = #{memPw}
+	</select>
+	
+	<update id="updateMemberName" parameterType="java.util.HashMap">
+		UPDATE MEMBER
+		<set>
+			memNm = #{memNm}
+		</set>
+		<where>
+			memId = #{memId}
+		</where>
+	</update>
+	
+	<update id="updateMemberEmail" parameterType="java.util.HashMap">
+		UPDATE MEMBER
+		<set>
+			memEmail = #{memEmail}
+		</set>
+		<where>
+			memId = #{memId}
+		</where>
+	</update>
+	
+	<update id="updateMemberPassword" parameterType="com.model.MemberVo">
+        UPDATE MEMBER
+        <set>
+        	memPw= #{memRePw} ,
+        	lastDate = now()
+        </set>
+        <where>
+	        memId = #{memId}
+        </where>
+    </update>
+    	
+
+	<select id="selectOneMemChk" resultType="com.model.MemberVo">
+	    SELECT * FROM MEMBER WHERE memId = #{memId} and memPw = #{memPw}
+	</select>
+	
+	
+	<select id="selectOneMemId" resultType="com.model.MemberVo">
+	    SELECT * FROM MEMBER WHERE memId = #{memId}
+	</select>
+	
+	
+	
+	
+    
+	<select id="selectGroup" resultType="com.model.MemberVo">
+	    SELECT mgrId FROM MEMBER_GROUP WHERE mgrTitle = #{mgrTitle}
+	</select>
+	
+	<insert id="insertMemberAndGroup" parameterType="com.model.MemberVo">
+		INSERT INTO MEMBER
+			( MEMEMAIL, MEMPW, MEMNM, MEMLEVEL, FRSTDATE, LASTDATE) 
+			VALUES 
+			( #{memEmail}, #{memPw}, #{memNm}, #{memLevel},  now(), now()
+		)
+	</insert>
+	<insert id="insertGroup" parameterType="com.model.MemberVo">
+		INSERT INTO MEMBER_GROUP 
+			(MGRTITLE, MGRPW, FRSTDATE, LASTDATE) 
+		VALUES 
+			(#{mgrTitle}, #{mgrPw}, now(), now() 
+		)	
+	</insert>
+	<update id="updateMgrId" parameterType="com.model.MemberVo">
+			UPDATE MEMBER 
+			SET mgrId = (SELECT MAX(mgrId) FROM MEMBER_GROUP) 
+		WHERE memEmail = #{memEmail}
+	</update>
+	
+	<select id="selectGroupOne" resultType="com.model.MemberVo" parameterType="hashmap">
+		SELECT 
+			MGRID, MGRTITLE
+		FROM 
+			MEMBER_GROUP
+		WHERE 
+			MGRID = #{mgrId}
+	</select>
+	
+    
+	<!-- ============= truncate ========================  -->
+	
+	
+<!-- 
+        
+    
+    
+    <delete id="deleteMember" parameterType="String">
+        DELETE FROM USER WHERE userid = #{userid}
+    </delete>
+    
+    
+    
+    <select id="selectAll" resultType="java.util.HashMap">
+        SELECT * FROM USER
+    </select> -->
+</mapper>

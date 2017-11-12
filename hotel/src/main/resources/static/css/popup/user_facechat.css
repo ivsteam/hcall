@@ -1,0 +1,72 @@
+.popupContentDiv div { border-bottom: 1px solid black; }
+.popupContentDiv b { 
+	font-weight: bold;
+	padding: 0px 15px;
+}
+.popupContentDiv ul { display: inline-table; }
+.popupContentDiv ul:first-child { background-color: #d5d7db; }
+.popupContentDiv li { height: 32px }
+
+
+ 
+ #popup {
+	display: none;
+	position: absolute;
+	background: white;
+}
+#popup h2 {
+	font-weight: bold;
+	color: white;
+	background: #3d586d;
+	padding: 10px;
+}
+#popup .popupContentDiv {
+	padding: 30px 15px 20px 15px; 
+}
+.popupContentDiv div { border-bottom: 1px solid black; }
+.popupContentDiv b { 
+	font-weight: bold;
+	padding: 0px 15px;
+}
+.popupContentDiv ul { display: inline-table; }
+.popupContentDiv ul:first-child { background-color: #d5d7db; }
+.popupContentDiv li { height: 32px }
+
+.popupContentLeftDiv {
+	float: left;
+	padding: 0px 50px 0 0;
+}
+.popupContentRightDiv {
+	float: left;
+}
+.popupBtnDiv { 
+	text-align: right;
+	padding: 10px;  
+}
+.popupBtnDiv input { 
+	background: #c68d7f; 
+	color: white;
+	font-weight: bold;
+	margin-top: 20px;
+}
+.popupBtnDiv input:last-child { background: #3d586d; }
+.reservationInfoDiv input { border: 0; }
+
+
+
+.popup_top_text{
+	position: absolute;
+	top: 50px;
+	right: 20px;
+	background:#c68d7f;
+	border-radius:10px;
+	box-shadow:2px 3px 8px rgba(0, 0, 0, 0.2);
+}
+.popup_top_text a{
+	display:block;
+	padding:10px 10px 10px 35px;
+	font-size:0.75em;
+	font-weight:bold;
+	color:#fff;
+	background:url(/css/pageImg/facechat_w.png)10px 8px no-repeat;
+}

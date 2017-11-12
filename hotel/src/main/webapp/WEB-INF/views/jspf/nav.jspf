@@ -1,0 +1,97 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<style>
+header{
+	width:100%;
+	margin:0 auto;
+	overflow:hidden;
+	position:fixed;
+	top:0;
+	background:#3d586d;
+	height:60px;
+	box-sizing:border-box;
+}
+header h1{float:left;}
+header h1 img{
+	padding:14px 0 0 20px;
+}
+header .top_menu{
+	float:right; 
+	font-weight:600;
+}
+header .top_menu .top_notification{
+	float:left;
+	margin-right:20px;
+}
+header .top_menu .top_notification li{
+	margin:18px 0 0 5px;
+	float:left; 
+	border-radius:15px;
+}
+header .top_menu .top_notification li a{
+	color:#fff;
+	font-size:0.75em;
+	display:block;
+	padding:6px 10px 6px 35px;
+}
+
+/* 상단 고객요청 아이콘 */
+header .top_menu .top_notification .nt_chat{background:#15313f url(/css/pageImg/nt_chat.png) 9px 4px no-repeat;}
+header .top_menu .top_notification .nt_pickdrop{background:#15313f url(/css/pageImg/nt_pickdrop.png) 9px 4px no-repeat;}
+header .top_menu .top_notification .nt_room{background:#15313f url(/css/pageImg/nt_room.png) 9px 4px no-repeat;}
+
+header .top_menu .user_menu{
+	 float:right;
+}
+header .top_menu .user_menu li{
+	float:left;
+	line-height:60px;
+	background:#15313f;
+	
+}
+header .top_menu .user_menu li a{
+	color:#fff;
+	font-size:0.75em;
+	padding:0 20px;
+}
+header .top_menu .user_menu li:nth-of-type(1) a{border-right:1px solid #3d586d;}
+</style>
+
+<header>
+	<h1><a href="/main" target="_self"><img src="/css/pageImg/top_logo_w.png" alt="hotel click to call"></a></h1>
+	
+	<div class="top_menu">
+		<ul class="top_notification">
+			<li class="nt_chat"><a href="/rsm/reqServiceMgr?gb=T" target="_self"><p id="countChat"></p></a></li>
+			<li class="nt_room"><a href="/rsm/reqServiceMgr?gb=C" target="_self"><p id=countFace></p></a></li>
+			<li class="nt_pickdrop"><a href="pickdrop.html" target="_self">0</a></li>
+		</ul>
+		<ul class="user_menu">
+			<c:if test="${not empty sessionScope.member}">
+				<li><a href="" target="_self" style="cursor: default;">${ sessionScope.name } 님</a></li>
+				<li><a href="/member/logout" target="_self"><span >로그아웃</span></a></li>
+			</c:if>
+		</ul>
+	</div>
+</header>
+
+<script>
+getChkReqservice();
+function getChkReqservice(){
+	setTimeout(getChkReqservice,2000);
+	
+	$.ajax({
+		url : '/rsm/reqServiceCnt',
+		type : 'POST',
+		success : function(data) {
+			$("#countFace").text(data.countFace);
+			$("#countChat").text(data.countChat);
+		},
+		error : function(data, status, error) {}
+	});
+	
+}
+
+</script>

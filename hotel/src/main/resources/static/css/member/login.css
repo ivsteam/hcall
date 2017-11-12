@@ -1,0 +1,109 @@
+.pageLayer { margin: 0; }
+.loginDiv table { width: 100%; }
+.loginDiv table tr > td:first-child {
+	padding-right: 10px; 
+}
+.loginDiv table tr > td:nth-child(2) { 
+	width: 70%;
+	padding-right: 1.5%; 
+}
+.loginDiv table input { width: 100%; }
+
+.loginDiv form div { padding-top: 10px; }
+.loginDiv form div a { margin: 0 10px; }
+
+.message {
+	color: red;
+	font-size: 12px;
+}
+
+/* 로그인페이지 */
+body { background:#edeef2; }
+button, input, select, textarea { font-size: 13px; }
+.login_main_wrap .login_main{
+	width:435px;
+	margin:90px auto 0;
+}
+.login_main_wrap .login_main h1{
+	text-align:center;
+	margin-bottom:30px;
+}
+.login_main_wrap .login_main h1 img{}
+.login_main_wrap .login_main ul.login_input{
+	width:100%;
+	overflow:hidden;
+}
+.login_main_wrap .login_main ul.login_input li{
+	float:left;
+}
+.login_main_wrap .login_main ul.login_input li.input_left{
+	width:320px;
+	margin-right:15px;
+}
+.login_main_wrap .login_main ul.login_input li.input_right{width:50%;}
+.login_main_wrap .login_main ul.login_input li.input_left input{/*아이디비번입력창*/
+	border-radius: 3px;
+	line-height: 1.5em;
+	height: 40px;
+	width:100%;
+	padding: 5px 10px 5px 40px;
+	margin-bottom:15px;
+	border: 0;
+	box-shadow: 0 1px 1px inset;
+	box-sizing:border-box;
+	color:#9fa0a0;
+}
+.login_main_wrap .login_main ul.login_input li.input_left input:nth-of-type(1){background:#d4d4d6 url(/css/pageImg/login_id.png)10px 12px no-repeat;}
+.login_main_wrap .login_main ul.login_input li.input_left input:nth-of-type(2){background:#d4d4d6 url(/css/pageImg/login_pw.png)10px 12px no-repeat;}
+.login_main_wrap .login_main ul.login_input li button{/*로그인하기 버튼*/
+	width:100px;
+	border-radius: 3px;
+	height: 95px;
+	line-height: 1.5em;
+	padding: 5px 8px;
+	border: 0;
+	font-weight:700;
+	color:#fff;
+	background:#093147 url(/css/pageImg/loginbt_bg.jpg)top center no-repeat;
+	font-family: "NanumGothic";
+}
+.login_main_wrap .login_main ul.login_input li ul.login_sub a{
+	color:#727171;
+}
+.login_main_wrap .login_main ul.login_input li ul.login_sub{
+	margin-top:5px;
+	color:#ddd;
+	font-size:0.8em;
+	float:right;
+}
+.login_main_wrap .login_main ul.login_input li ul.login_sub li:nth-of-type(1){ 
+	background:url(/css/pageImg/login_join.png)12px top no-repeat;
+	padding-left:30px;
+}
+.login_main_wrap .login_main ul.login_input li ul.login_sub li:nth-of-type(2){
+	background:url(/css/pageImg/login_find.png)12px top no-repeat;
+	padding-left:30px;
+	border-right:1px solid #ccc; 
+	margin-right:5px; 
+	padding-right:5px;
+}
+.login_main_wrap .login_main ul.login_input li label{
+	color:#727171;
+	font-size:0.9em;
+}
+.login_main_wrap .login_main p{
+	font-weight:600;
+	margin-top:40px;
+	color:#c68d7f; 
+	text-align:center; 
+	background:url(/css/pageImg/snsbar.jpg)top center no-repeat;
+}
+.login_main_wrap .login_main ul.login_sns{
+	overflow:hidden;
+	width:260px;
+	margin:0 auto;
+}
+.login_main_wrap .login_main ul.login_sns li{
+	float:left;
+	margin:30px 5px;
+}

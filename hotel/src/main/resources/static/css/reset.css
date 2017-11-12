@@ -1,0 +1,154 @@
+/* 
+CSS리셋
+http://meyerweb.com/eric/tools/css/reset
+*/
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a {}
+a:link{} /*방문전*/
+a:visited{} /*방문후*/
+a:hover{} /*포커스*/
+a:active{} /*활성화*/
+a:link, a:visited, a:hover, a:active{
+	color:#000;
+	text-decoration:none;
+}
+
+
+
+
+th, td { text-align: center; }
+td { border-bottom: 1px solid #ccc; }
+tbody td { padding: 10px 20px; }
+
+
+
+
+/* 컨텐츠 부분 */
+section{
+	margin:60px 0 0 170px;
+	padding:40px;
+	min-width:510px;
+}
+section .section_title{
+	font-size:1.2em;
+	font-weight:600;
+	color:#3d586d;
+	padding-bottom:10px;
+	border-bottom:1px solid #cdcfd3;
+	margin-bottom:10px;
+}
+section .p_history{ /*현재위치*/
+	font-size:0.7em;
+	color:#999;
+	font-weight:600;
+	background:url(/css/pageImg/i_history.png)left top no-repeat;
+	padding-left:15px;
+}
+
+
+
+section .main_content{
+	margin-top:30px;
+	/* overflow:hidden; */
+}
+section .main_content .table_bar{
+	font-size:0.8em;
+	font-weight:700;
+	color:#333;
+	margin-bottom:15px;
+	overflow:hidden;
+}
+section .main_content .table_bar .search_box {
+	overflow:hidden;
+	float:left;
+}
+section .main_content .table_bar .search_box input{
+	height: 29px;
+	padding: 5px 8px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.085) inset;
+}
+section .main_content .table_bar .search_box input.date_form{
+	background:#fff url(/css/pageImg/calendar.png) 105px 8px no-repeat;
+	width:130px;
+}
+section .main_content .table_bar .search_box .search_bt{
+	background:#3d586d url(/css/pageImg/i_search.png)5px 5px no-repeat; 
+	border:0px; 
+	width:27px; 
+	height:27px;
+}
+section .main_content .table_bar .search_box>select{
+	border-radius: 3px;
+	height: 27px;
+	border: 1px solid #ccc;
+}
+section .main_content .table_bar .page_list_wrap{
+	overflow:hidden;
+	float:right;
+	padding-left:30px;
+	background:url(/css/pageImg/i_list_n.png)left 5px no-repeat;
+}
+section .main_content .table_bar .page_list_wrap .page_list_n{
+	border-radius: 3px;
+	height: 27px;
+	border: 1px solid #ccc;
+}
+
+header { z-index: 10; }
+#popup { z-index: 100; }
+.btn {
+	color: white;
+	font-weight: bold;
+	margin: 10px 5px;
+	font-size: 12px; 
+}

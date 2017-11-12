@@ -1,0 +1,27 @@
+body > .pageLayer { margin: 0 0 40px 0; }
+
+.searchDiv{ display: none; }
+.message { 
+	color: red;
+	font-size: 12px;
+	display: block; 
+	margin-bottom: 10px;
+}
+
+.reservationBtn { 
+	background: #3d586d;
+	color: white;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-left: 180px;
+}
+.addReservationDiv b { 
+	font-weight: bold;
+	padding: 0px 15px;
+}
+.addReservationDiv ul { display: inline-table; }
+.addReservationDiv li { height: 32px }
+.reservationContentRightDiv {
+	float: left;
+}
+.reservationInfoDiv input { border: 0; }
