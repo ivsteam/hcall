@@ -1,0 +1,30 @@
+.custAddBtn { background: #3d586d; font-size: 10px; }
+.searchBtn{ background: #3d586d; font-size: 10px; }
+.searchDivBtn{ background: #c68d7f; }
+.cmCreateBtn{ background: #3d586d; }
+.custAddBtn, .searchBtn, .searchDivBtn, .cmCreateBtn { color: white; font-weight: bold; }
+.searchResultDiv { padding: 15px; }
+
+.i_table tr{ border-bottom:1px solid #e2e2e2; }
+.i_table td, .i_table th{ 
+	border-right:1px solid #e2e2e2; 
+	padding: 5px 20px;
+	font-size: 12px; 
+}
+.i_table thead tr th{
+	vertical-align:middle; 
+	height:27px; 
+	background:#c68d7f;
+	color:#fff;
+	font-weight:600;
+}
+.i_table tbody tr:hover td{
+	background:#f4f4f4;
+}
+.i_table tbody tr td{
+	vertical-align:middle; 
+	height:27px; 
+	color:#7a7a7a;
+	text-align:center;
+}
+.custAddBtn { margin: 0; }

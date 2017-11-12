@@ -1,0 +1,81 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link href="/css/reset.css" rel="stylesheet">
+<style>
+/*왼쪽메뉴*/
+.left_nav_wrap{
+	height:100%;
+	width:170px;
+	background:#d5d7db;
+	position:fixed;
+	left:0; top:60px;
+	overflow:hidden;
+	padding:30px 0 ;
+}
+.left_nav_wrap .left_nav{}
+.left_nav_wrap .left_nav li{
+	
+}
+.left_nav_wrap .left_nav .i_setting_sub a,
+.left_nav_wrap .left_nav .i_notice_sub a{
+	font-size:0.7em;
+	color:#727171;
+	display:block;
+	line-height:30px;
+	padding-left:60px;
+	font-weight:600;
+	background:#c4c8ce url(../css/pageImg/i_sub.png) 36px 12px no-repeat;
+}
+/*왼쪽메뉴 선택되었을때 효과*/
+.n_click{background:#fff; }
+.n_click a{border-right:6px solid #c68d7f;}
+/* 왼쪽메뉴 아이콘스타일 */
+.left_nav_wrap .left_nav .i_room a{background:url(/css/pageImg/i_room.png) 30px 11px no-repeat;}
+.left_nav_wrap .left_nav .i_inquiryService a{background:url(/css/pageImg/i_inquiry.png) 30px 11px no-repeat;}
+.left_nav_wrap .left_nav .i_inquiry a{background:url(/css/pageImg/i_inquiry.png) 30px 11px no-repeat;}
+.left_nav_wrap .left_nav .i_registration a{background:url(/css/pageImg/i_registration.png) 30px 11px no-repeat;}
+.left_nav_wrap .left_nav .i_client a{background:url(/css/pageImg/i_client.png) 30px 11px no-repeat;}
+.left_nav_wrap .left_nav .i_setting a{background:url(/css/pageImg/i_setting.png) 30px 11px no-repeat;}
+.left_nav_wrap .left_nav .i_notice a{background:url(/css/pageImg/i_notice.png) 30px 11px no-repeat;}
+.left_nav_wrap .left_nav .i_board a{background:url(/css/pageImg/i_board.png) 30px 11px no-repeat;}
+.left_nav_wrap .left_nav .i_report a{background:url(/css/pageImg/i_report.png) 30px 11px no-repeat;}
+.left_nav_wrap .left_nav .i_pickdrop a{background:url(/css/pageImg/i_pickdrop.png) 30px 11px no-repeat;}
+
+
+.i_room, .i_inquiry, .i_inquiryService, .i_registration, .i_client, .i_setting, .i_notice, .i_board, .i_report, .i_pickdrop {
+	height:40px;
+}
+.i_room a, .i_inquiryService a, .i_inquiry a, .i_registration a, .i_client a, .i_setting a, .i_notice a, .i_board a, .i_report a, .i_pickdrop a{
+	font-size:0.75em;
+	color:#727171;
+	display:block;
+	line-height:40px;
+	padding-left:60px;
+	font-weight:600;
+}
+</style>
+<script type='text/javascript'>
+$(document).ready(function() {
+	// 객실정보
+	$('.hrmInfoListBtn').click(function() {
+//		hotelCreateCheckAjax($(this).data('code'), '/hotel/info');
+		location.href=$(this).data('code');
+	});
+	
+	// 객실등록
+	$('.addHrmBtn').click(function() {
+//		hotelCreateCheckAjax($(this).data('code'), '/hotel/info');
+		location.href=$(this).data('code');
+	});
+});
+</script>
+<nav class="left_nav_wrap">
+	<ul class="left_nav">
+		<li class="i_room"><a href="/hrm/hrmList" target="_self">객실현황</a></li>
+		<li class="i_inquiryService"><a href="/rsm/reqServiceMgr" target="_self">서비스요청현황</a></li>
+		<li class="i_inquiry"><a href="/reservation/reservation" target="_self">예약문의</a></li>
+		<li class="i_registration"><a href="/reservation/addReservation" target="_self">예약문의등록</a></li>
+		<li class="i_client"><a href="/customer/cmMain" target="_self">고객관리</a></li>
+		<li class="i_setting"><a href="#" target="_self" class="hrmInfoListBtn" data-code="/hrm/hrmInfoList">객실정보</a></li>
+		<li class="i_pickdrop"><a href="/customer/pickdrop" target="_self">픽드랍서비스</a></li>
+	</ul>
+</nav>

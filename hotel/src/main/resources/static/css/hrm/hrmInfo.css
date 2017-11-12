@@ -1,0 +1,51 @@
+/* file update */
+#trigger-upload {
+    color: white;
+    background-color: #00ABC7;
+    font-size: 14px;
+    padding: 7px 20px;
+    background-image: none;
+}
+#fine-uploader-manual-trigger .qq-upload-button { margin-right: 15px; }
+#fine-uploader-manual-trigger .buttons { width: 36%; }
+#fine-uploader-manual-trigger .qq-uploader .qq-total-progress-bar-container { width: 60%; }
+
+.row { margin: 0; }
+
+.message { 
+	color: red;
+	font-size: 12px;
+	display: block; 
+	margin-bottom: 10px;
+}
+
+.imgDiv { 
+	text-align: center;
+	display: inline-block;
+	height: 200px; 
+}
+
+.registDiv b { 
+	font-weight: bold;
+	padding: 0px 15px;
+}
+.registDiv ul { display: inline-table; }
+.registDiv ul:nth-child(2n-1) li {
+	background-color: #d5d7db; 
+	padding-right: 20px; 
+}
+.registDiv ul:nth-child(2n) li { 
+	padding-right: 40px; 
+	width: 212px; 
+}
+.registDiv .registTextareaLi { width: 320px; height: auto; }
+.registDiv li { padding: 10px; }
+.registRightDiv {
+	float: left;
+}
+form { margin-bottom: 20px; }
+.reservationInfoDiv input { border: 0; }
+
+.registTextareaLi span {
+    padding-left: 20px;
+}

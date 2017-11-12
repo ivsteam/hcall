@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+ <!-- 170912 create = limitationOne  -->
+ 
+<mapper namespace="com.privateMapper.ICustomerMapper">
+	
+	<resultMap id="reservationVo" type="com.model.ReservationAddVo">
+		<result column="reserv_seq"	property="reserv_seq"/>
+		<result column="hotel_seq"		property="hotel_seq"/>
+		<result column="hrm_seq"		property="hrm_seq"/>
+		<result column="cust_seq"		property="cust_seq"/>
+		<result column="reservation_name" property="reservation_name"/>
+		<result column="guest_name" property="guest_name"/>
+		<result column="room_num"	property="room_num"/>
+		<result column="personnel"	property="personnel"/>
+		<result column="hrm_count"	property="hrm_count"/>
+		<result column="add_date"	property="add_date"/>
+		<result column="first_date"	property="first_date"/>
+		<result column="last_date"	property="last_date"/>
+		<result column="etc"			property="etc"/>
+		<result column="state"			property="state"/>
+	</resultMap>
+	
+	<resultMap id="CustomerVo" type="com.model.CustomerVo">
+		<result column="hotel_seq"	property="hotel_seq"/>
+		<result column="cust_seq"	property="cust_seq"/>
+		<result column="cust_name"	property="cust_name"/>
+		<result column="cust_pw"		property="cust_pw"/>
+		<result column="cust_phone"	property="cust_phone"/>
+		<result column="cust_email"	property="cust_email"/>
+		<result column="cust_rating"	property="cust_rating"/>
+		<result column="signup_date"	property="signup_date"/>
+	</resultMap>
+	
+	<resultMap id="PickdropVo" type="com.model.PickdropVo">
+		<result column="pd_seq"				property="pd_seq"/>
+		<result column="hotel_seq"			property="hotel_seq"/>
+		<result column="cust_seq"			property="cust_seq"/>
+		<result column="personnel"			property="personnel"/>
+		<result column="add_date"			property="add_date"/>
+		<result column="want_date"			property="want_date"/>
+		<result column="start_address"	property="start_address"/>
+		<result column="start_point_width"	property="start_point_width"/>
+		<result column="start_point_height"	property="start_point_height"/>
+		<result column="end_address"			property="end_address"/>
+		<result column="end_point_width"	property="end_point_width"/>
+		<result column="end_point_height"	property="end_point_height"/>
+		<result column="complete_check" 	property="complete_check"/>
+		<association property="customerVo" resultMap="CustomerVo"/>
+		<association property="reservationVo" resultMap="reservationVo"/>
+	</resultMap>
+	
+	<!-- custList -->
+	<select id="custList" resultType="com.model.CustomerVo">
+		SELECT * FROM customer WHERE hotel_seq=#{hotel_seq} ORDER BY cust_seq DESC
+	</select>
+	
+	<!-- search custList -->
+	<select id="searchCustList" parameterType="com.model.CustomerSearchVo" resultType="com.model.CustomerVo">
+		SELECT * FROM customer 
+			<where>
+				<if test="true">hotel_seq=#{hotel_seq}</if>
+				<if test="searchType == 'name'.toString()">AND cust_name LIKE #{searchValue}</if>
+				<if test="searchType == 'phone'.toString()">AND cust_phone LIKE #{searchValue}</if>
+				<if test="searchType == 'email'.toString()">AND cust_email LIKE #{searchValue}</if>
+				<if test="searchType == '#'.toString()">
+						AND cust_name LIKE #{searchValue} 
+						OR hotel_seq=#{hotel_seq} AND cust_phone LIKE #{searchValue} 
+						OR hotel_seq=#{hotel_seq} AND cust_email LIKE #{searchValue}
+				</if>
+			</where>
+	</select>
+	
+	<!-- customer create -->
+	<insert id="cmCreate" parameterType="com.model.CustomerVo">
+		INSERT INTO customer (hotel_seq, cust_name, cust_pw, cust_phone, cust_email, cust_rating, signup_date) 
+			VALUES (#{hotel_seq}, #{cust_name}, #{cust_pw}, #{cust_phone}, #{cust_email}, #{cust_rating}, current_date)
+	</insert>
+	
+	<!-- custommer info -->
+	<select id="getCustomer" parameterType="int" resultType="com.model.CustomerVo">
+		SELECT * FROM customer WHERE cust_seq=#{cust_seq}
+	</select>
+	
+	<!-- customer update -->
+	<update id="cmUpdate" parameterType="com.model.CustomerVo">
+		UPDATE customer 
+			SET cust_name=#{cust_name, jdbcType=VARCHAR}, cust_pw=#{cust_pw, jdbcType=VARCHAR}, cust_phone=#{cust_phone, jdbcType=VARCHAR}, cust_email=#{cust_email, jdbcType=VARCHAR}, cust_rating=#{cust_rating, jdbcType=VARCHAR}
+				WHERE cust_seq=#{cust_seq}
+	</update>
+	
+	<!-- 픽드랍서비스 페이지 -->
+	<select id="pickDrop" parameterType="int" resultMap="PickdropVo">
+		SELECT * 
+				FROM pickdrop p LEFT JOIN customer c ON p.cust_seq = c.cust_seq
+			WHERE p.hotel_seq=#{hotel_seq}
+					ORDER BY p.pd_seq DESC
+	</select>
+	
+	<!-- 픽드랍서비스 검색 -->
+	<select id="pickDropSearch" parameterType="com.model.PickdropSearchVo" resultMap="PickdropVo">
+		SELECT * FROM (
+			SELECT 
+					p.pd_seq, p.hotel_seq, p.reserv_seq, p.cust_seq, p.personnel, p.add_date, p.want_date, p.start_address, 
+					p.start_point_width, p.start_point_height, p.end_address, p.end_point_width, p.end_point_height, p.complete_check,
+					c.cust_name, c.cust_pw, c.cust_phone, c.cust_email, c.cust_rating, c.signup_date
+				FROM pickdrop p LEFT JOIN customer c ON p.cust_seq = c.cust_seq
+				<where>
+					<if test="true">p.hotel_seq=#{hotel_seq}</if>
+					<if test="valueType == 'name'.toString()">AND c.cust_name LIKE #{searchValue}</if>
+					<if test="valueType == 'phone'.toString()">AND c.cust_phone LIKE #{searchValue}</if>
+					<if test="valueType == 'email'.toString()">AND c.cust_email LIKE #{searchValue}</if>
+					<if test="valueType == '#'.toString()">
+							AND c.cust_name LIKE #{searchValue}
+							OR p.hotel_seq=#{hotel_seq} AND c.cust_phone LIKE #{searchValue}
+							OR p.hotel_seq=#{hotel_seq} AND c.cust_email LIKE #{searchValue}
+					</if>
+				</where>
+				) a <if test="completeTypeBoolean != null">WHERE a.complete_check=#{completeTypeBoolean}</if>
+	</select>
+	
+	<!-- 픽드랍서비스 예약찾기 -->
+	<select id="reservationList" parameterType="com.model.CustomerSearchVo" resultType="com.model.ReservationCusVo">
+		SELECT * 
+				FROM reservation r LEFT JOIN customer c ON r.cust_seq = c.cust_seq 
+			<where>
+				<if test="searchType == 'name'.toString()">
+					c.cust_name LIKE #{searchValue}
+				</if>
+				<if test="searchType == 'phone'.toString()">
+					c.cust_phone LIKE #{searchValue}
+				</if>
+				<if test="searchType == 'email'.toString()">
+					c.cust_email LIKE #{searchValue}
+				</if>
+			</where>
+					AND r.hotel_seq=#{hotel_seq} AND r.state ='예약완료' 
+	</select>
+	
+	<!-- 픽드랍서비스 등록 -->
+	<insert id="addPickdrop" parameterType="com.model.PickdropVo">
+		INSERT INTO pickdrop (hotel_seq, reserv_seq, cust_seq, personnel, add_date, want_date, 
+						start_address, start_point_width, start_point_height, 
+						end_address, end_point_width, end_point_height) 
+						
+				VALUES (#{hotel_seq}, #{reserv_seq}, #{cust_seq}, #{personnel}, current_date, TO_TIMESTAMP(#{want_date}, 'YYYY-MM-DD HH24:MI'), 
+								#{start_address}, #{start_point_width}, #{start_point_height}, 
+								#{end_address}, #{end_point_width}, #{end_point_height})
+	</insert>
+	
+	<!-- 픽드랍서비스 상세보기 -->
+	<select id="pickdropInfo" parameterType="com.model.PickdropVo" resultMap="PickdropVo">
+		SELECT * 
+				FROM pickdrop p 
+					LEFT JOIN customer c ON p.cust_seq = c.cust_seq 
+					LEFT JOIN 
+							(SELECT re.*, h.room_num 
+										FROM reservation re LEFT JOIN HRM h ON re.hrm_seq = h.hrm_seq 
+								) r ON p.cust_seq = r.cust_seq 
+			WHERE p.hotel_seq=#{hotel_seq} AND p.pd_seq=${pd_seq}
+	</select>
+	
+	<!-- 픽드랍서비스 완료 -->
+	<update id="pickdropSuccess" parameterType="com.model.PickdropVo">
+		UPDATE pickdrop SET complete_check=true WHERE hotel_seq=#{hotel_seq} AND pd_seq=#{pd_seq}
+	</update>
+	
+	<!-- 픽드랍서비스 삭제 -->
+	<delete id="pickdropDelete" parameterType="com.model.PickdropVo">
+		DELETE FROM pickdrop WHERE hotel_seq=#{hotel_seq} AND pd_seq=#{pd_seq}
+	</delete>
+</mapper>

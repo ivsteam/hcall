@@ -1,0 +1,54 @@
+.popup_wrap{
+	width:100%; 
+	overflow:hidden; 
+	height:500px;
+	font-size:0.8em;
+	min-width:700px;
+}
+.popup_wrap .popup_user, .popup_textchat, .popup_facechat, .popup_pickdrop{float:left;}
+
+.popup_wrap .popup_user{
+	width:50%; 
+	height:100%; 
+	padding:30px;
+	box-sizing:border-box;
+}
+.popup_wrap .popup_user h3{margin-bottom:10px;}
+.popup_wrap .popup_user h3 img{}
+.popup_wrap .popup_user table{
+	border-top:3px solid #888;
+	border-bottom:3px solid #888;
+	width:100%;
+	margin-bottom:10px;
+}
+.popup_wrap .popup_user table tr{
+	height:40px;
+	border-bottom:1px solid #ddd;
+}
+.popup_wrap .popup_user table tr th{
+	background:#efefef;
+	vertical-align:middle;
+	text-align:left;
+	width:80px;
+	padding-left:10px;
+	box-sizing:border-box;
+	font-weight:700;
+}
+.popup_wrap .popup_user table tr td{
+	vertical-align:middle;
+	text-align:left;
+	padding-left:10px;
+	box-sizing:border-box;
+}
+
+.popup_wrap .popup_user .popup_bt{
+	background:#3d586d;
+	border-radius:5px;
+	float:right;
+}
+.popup_wrap .popup_user .popup_bt a{
+	display:inline-block;
+	padding:10px 20px;
+	font-weight:bold;
+	color:#fff;
+}
