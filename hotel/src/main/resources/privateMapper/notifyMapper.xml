@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mapper.INotifyMapper">
+	
+	<select id="selectNotify" resultType="com.model.NotifyVo" parameterType="com.model.NotifyVo">
+		SELECT 
+			memTeam,
+			memId,
+			nSeq,
+			nNotifyYN,
+			frstDate,
+			lastDate		
+		FROM NOTIFY
+		<where>
+			AND memId = #{memId}
+		</where>
+	</select>
+	
+	<update id="updateNotify" parameterType="com.model.NotifyVo">
+		DELETE FROM NOTIFY
+		where 
+			memId = #{memId}
+	</update>
+
+	<update id="clearNotify" parameterType="com.model.NotifyVo">
+		DELETE FROM NOTIFY
+		where 
+			nSeq = #{nSeq}
+	</update>
+	
+	<insert id="insertNotify" parameterType="com.model.NotifyVo">
+        INSERT 
+        	INTO NOTIFY
+        	( 
+		        memId,
+		        senderID,
+		        recipientID,
+				nNotifyYN,
+				frstDate,
+				lastDate		
+        	) 
+        	VALUES(
+		        #{memId},
+		        #{senderID},
+		        #{recipientID},
+		        #{nNotifyYN},
+		        now(),
+				now() 
+	        )
+    </insert>
+    
+    
+	
+</mapper>

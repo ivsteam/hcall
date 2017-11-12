@@ -1,0 +1,65 @@
+.pageLayer { margin: 0 0 40px 0; }
+.message { 
+	color: red;
+	font-size: 12px;
+	display: block; 
+	margin-bottom: 10px;
+}
+/* tbody tr { cursor: pointer; } */
+tbody .dataRadio { display: none; }
+
+.pageLayer  b,
+.reservationInfoDiv b { 
+	font-weight: bold;
+	padding: 4px 15px 3px 15px;
+}
+.reservationInfoDiv b { display: block; }
+.reservationInfoDiv ul { display: inline-table; }
+.reservationInfoDiv ul:nth-child(2n-1) li {
+	background-color: #d5d7db; 
+	padding-right: 20px; 
+}
+.reservationInfoDiv ul:nth-child(2n) li { 
+	padding-right: 40px; 
+	width: 212px; 
+}
+.reservationInfoDiv .registTextareaLi { width: 320px; height: auto; }
+.registTextareaLi b { padding: 10px; }
+.reservationInfoDiv li { padding: 10px }
+.registRightDiv {
+	float: left;
+}
+form { margin-bottom: 20px; }
+.reservationInfoDiv input { border: 0; }
+
+
+
+/* 객실현황 테이블 */
+section .main_content .c_table{
+	font-size:0.75em;
+	background:#fff;
+}
+section .main_content .c_table tr,
+section .main_content .c_table th{
+	padding: 5px 10px;
+}
+section .main_content .c_table tr{ border-bottom:1px solid #e2e2e2;}
+section .main_content .c_table thead tr th{
+	vertical-align:middle; 
+	height:30px; 
+	background:#c68d7f;
+	color:#fff;
+	font-weight:600;
+}
+section .main_content .c_table tbody tr:hover td{ background:#f4f4f4; }
+section .main_content .c_table tbody tr td{
+	vertical-align:middle; 
+	height:30px; 
+	color:#7a7a7a;
+	text-align: center;
+}
+section .main_content .c_table tbody tr td:nth-of-type(2){font-weight:bold;}
+section .main_content .c_table tbody tr td:nth-of-type(3){font-weight:bold;}
+section .main_content .c_table tbody tr td:nth-of-type(9){font-weight:bold; color:#3d586d;}
+
+section .main_content .c_table > tfoot > tr, section tfoot > tr > td { border-bottom: 0; }

@@ -1,0 +1,67 @@
+.pageLayer { margin: 0 0 40px 0; }
+.tableTdBtn span { 
+	cursor: pointer;
+	margin: 0; 
+}
+
+/* 객실현황 테이블 */
+section .main_content .c_table{
+	border:1px solid #c9caca;
+	width:100%;
+	font-size:0.75em;
+	background:#fff;
+}
+section .main_content .c_table tr{ border-bottom:1px solid #e2e2e2;}
+section .main_content .c_table thead tr th{
+	vertical-align:middle;
+	height: 40px; 
+	background:#c68d7f;
+	color:#fff;
+	font-weight:600;
+}
+section .main_content .c_table tbody tr:hover td{ background:#f4f4f4; }
+section .main_content .c_table tbody tr td{
+	vertical-align:middle; 
+	height: 40px;
+	color:#7a7a7a;
+	text-align: center;
+}
+section .main_content .c_table tbody tr td:nth-of-type(2){font-weight:bold;}
+section .main_content .c_table tbody tr td:nth-of-type(3){font-weight:bold;}
+section .main_content .c_table tbody tr td:nth-of-type(9){font-weight:bold; color:#3d586d;}
+
+section .page_num{
+	margin:15px auto; 
+	width:120px;
+	overflow:hidden;
+}
+section .page_num li{ float:left; }
+section .page_num li.num_choice a{
+	color:#fff;
+	background:#555;
+	
+}
+section .page_num li a{
+	display:inline-block; 
+	width:20px;
+	text-align:center;
+	line-height:20px;
+	border-radius:5px;
+	font-size:0.8em;
+	font-weight:700;
+}
+section .page_num .prev a{
+	text-indent:-5000px;
+	background:url(/css/pageImg/page_prev.png)left 4px no-repeat;
+}
+section .page_num .next a{
+	text-indent:-5000px;
+	background:url(/css/pageImg/page_next.png)left 4px no-repeat;
+}
+
+.hrmInfoUpdate { 
+	background-color: #3d586d;
+	color: white;
+	font-weight: bold;
+	font-size: 12px;
+}

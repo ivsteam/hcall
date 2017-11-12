@@ -1,0 +1,97 @@
+.cmCreate { 
+	background-color: #3d586d; 
+	color: white; 
+	font-weight: bold;
+}
+
+/* 객실현황 테이블 */
+section .main_content .c_table{
+	border:1px solid #c9caca;
+	width:100%;
+	font-size:0.75em;
+	background:#fff;
+}
+section .main_content .c_table tr{ border-bottom:1px solid #e2e2e2;}
+section .main_content .c_table thead tr th{
+	vertical-align:middle; 
+	height:40px; 
+	background:#c68d7f;
+	color:#fff;
+	font-weight:600;
+}
+section .main_content .c_table tbody tr:hover td{
+	background:#f4f4f4;
+}
+section .main_content .c_table tbody tr td{
+	vertical-align:middle; 
+	height:30px; 
+	color:#7a7a7a;
+	text-align:center;
+}
+section .main_content .c_table tbody tr td:nth-of-type(2){font-weight:bold;}
+section .main_content .c_table tbody tr td:nth-of-type(3){font-weight:bold;}
+section .main_content .c_table tbody tr td:nth-of-type(9){font-weight:bold; color:#3d586d;}
+
+section .page_num{
+	margin:15px auto; 
+	width:120px;
+	overflow:hidden;
+}
+section .page_num li{
+	float:left;
+}
+section .page_num li.num_choice a{
+	color:#fff;
+	background:#555;
+	
+}
+section .page_num li a{
+	display:inline-block; 
+	width:20px;
+	text-align:center;
+	line-height:20px;
+	border-radius:5px;
+	font-size:0.8em;
+	font-weight:700;
+}
+section .page_num .prev{}
+section .page_num .prev a{
+	text-indent:-5000px;
+	background:url(/css/pageImg/page_prev.png)left 4px no-repeat;
+}
+section .page_num .next{}
+section .page_num .next a{
+	text-indent:-5000px;
+	background:url(/css/pageImg/page_next.png)left 4px no-repeat;
+}
+/* 고객관리 테이블 ------객실현황 CSS사용*/
+section .main_content .c_table tbody tr .chat_sevice a{font-weight:800; padding:2px 0 2px 25px; color:#7a7a7a;}
+section .main_content .c_table tbody tr .chat_sevice a:nth-of-type(1){background:url(/css/pageImg/facechat.png)5px 2px no-repeat;}
+section .main_content .c_table tbody tr .chat_sevice a:nth-of-type(2){background:url(/css/pageImg/textmsg.png)5px 1px no-repeat;}
+
+.text_bt_style { 
+	float: right;
+	text-align: right;
+	margin-top: 10px; 
+}
+
+.popup_wrap .popup_facechat{
+	width:50%; 
+	height:500px;
+	/* background:url(/css/pageImg/img_u.jpg)center center no-repeat; */
+	background-size:cover;
+	box-sizing:border-box;
+	position:relative;
+	overflow:hidden;
+}
+.popup_wrap .popup_facechat .popup_m_face{
+	position:absolute;
+	top:350px;
+	right:20px;
+	background:url(/css/pageImg/img_m.jpg)center center no-repeat;
+	border:3px solid #fff;
+	border-radius:10px;
+	box-shadow:2px 3px 8px rgba(0, 0, 0, 0.2);
+	height:120px;
+	width:120px;
+}

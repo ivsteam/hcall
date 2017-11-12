@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+ <!-- 170915 create = limitationOne  -->
+ 
+<mapper namespace="com.privateMapper.IRsvMapper">
+	
+	<!-- 예약리스트 -->
+	<select id="hrmList" parameterType="int" resultType="com.model.ReservationCusVo">
+		SELECT *, (last_date - first_date) term FROM reservation 
+				WHERE hotel_seq=#{hotel_seq} AND state='예약완료' 
+						OR hotel_seq=#{hotel_seq} AND state='체크인'
+	</select>
+	
+	<!-- 예약등록 리스트 -->
+	<select id="reservation" parameterType="com.model.ReservationSearchVo" resultType="com.model.ReservationCusVo">
+		SELECT * FROM reservation 
+				<where>
+					<if test="true">hotel_seq=#{hotel_seq}</if>
+					<if test="stateType == 'finish'.toString()">AND state='완료'</if>
+					<if test="stateType == 'success'.toString()">AND state='예약완료'</if>
+					<if test="stateType == 'deposit'.toString()">AND state='입금대기'</if>
+					<if test="stateType == 'waiting'.toString()">AND state='대기중'</if>
+					<if test="stateType == 'proceeding'.toString()">AND state='예약중'</if>
+					<if test="stateType == 'start'.toString()">AND state='예약등록'</if>
+					<if test="stateType == 'cancel'.toString()">AND state='예약취소'</if>
+				</where>
+			ORDER BY reserv_seq DESC
+	</select>
+	
+	<!--
+	<select id="reservation" parameterType="int" resultType="com.model.ReservationCusVo">
+		SELECT * 
+				FROM reservation r LEFT JOIN customer c ON r.cust_seq=c.cust_seq
+						LEFT JOIN HRM h ON h.hrm_seq = r.hrm_seq 
+			WHERE r.hotel_seq=#{hotel_seq} 
+					ORDER BY r.reserv_seq DESC
+	</select>
+	-->
+	
+	<!-- 예약등록 리스트 검색 -->
+	<!--
+	<select id="searchReservation" parameterType="com.model.ReservationSearchVo" resultType="com.model.ReservationCusVo">
+		SELECT * 
+				FROM reservation r LEFT JOIN customer c ON r.cust_seq=c.cust_seq
+						LEFT JOIN HRM h ON h.hrm_seq = r.hrm_seq 
+			<where>
+				<if test="true">r.hotel_seq=#{hotel_seq}</if>
+				
+				<if test="valueType == '#'.toString()">
+					AND c.cust_name LIKE #{searchValue} 
+					OR r.hotel_seq=#{hotel_seq} AND c.cust_phone LIKE #{searchValue} 
+					OR r.hotel_seq=#{hotel_seq} AND h.room_num LIKE #{searchValue}
+				</if>
+				<if test="valueType == 'name'.toString()">AND c.cust_name LIKE #{searchValue}</if>
+				<if test="valueType == 'phone'.toString()">AND c.cust_phone LIKE #{searchValue}</if>
+				<if test="valueType == 'hrm'.toString()">AND h.room_num LIKE #{searchValue}</if>
+				
+				<if test="stateType == 'finish'.toString()">AND r.state='완료'</if>
+				<if test="stateType == 'success'.toString()">AND r.state='예약완료'</if>
+				<if test="stateType == 'deposit'.toString()">AND r.state='입금대기'</if>
+				<if test="stateType == 'waiting'.toString()">AND r.state='대기중'</if>
+				<if test="stateType == 'proceeding'.toString()">AND r.state='예약중'</if>
+				<if test="stateType == 'start'.toString()">AND r.state='예약등록'</if>
+				<if test="stateType == 'cancel'.toString()">AND r.state='예약취소'</if>
+			</where>
+	</select>
+	-->
+	
+	<!-- 예약문의 정보 -->
+	<select id="reservationInfo" parameterType="int" resultType="com.model.ReservationCusVo">
+		SELECT * FROM reservation WHERE reserv_seq=#{reserv_seq}
+	</select>
+	
+	<!--
+	<select id="reservationInfo" parameterType="int" resultType="com.model.ReservationCusVo">
+		SELECT h.room_num, r.reserv_seq, r.hotel_seq, r.hrm_seq, r.cust_seq, 
+					r.personnel, r.hrm_count, r.add_date, r.first_date, r.last_date, r.etc, r.state, 
+					c.cust_name, c.cust_phone, c.cust_email 
+					
+				FROM reservation r LEFT JOIN HRM h ON r.hrm_seq = h.hrm_seq 
+						LEFT JOIN customer c ON  r.cust_seq = c.cust_seq 
+						
+			WHERE r.reserv_seq=#{reserv_seq}
+	</select>
+	-->
+	
+	<!-- 문의정보 수정 -->
+	<update id="reservationInfoUpdate" parameterType="com.model.ReservationAddVo">
+		UPDATE reservation 
+			<set>
+				<if test="hrm_seq != null">hrm_seq=#{hrm_seq},</if>
+				<if test="personnel != null">personnel=#{personnel},</if>
+				<if test="add_date != null">add_date=#{add_date},</if>
+				<if test="first_date != null">first_date=TO_DATE(#{first_date}, 'YYYY-MM-DD'),</if>
+				<if test="last_date != null">last_date=TO_DATE(#{last_date}, 'YYYY-MM-DD'),</if>
+				<if test="etc != null">etc=#{etc},</if>
+				<if test="state != null">state=#{state}</if>
+			</set>
+			WHERE reserv_seq=#{reserv_seq}
+	</update>
+	
+	<!-- 예약문의 등록 -->
+	<insert id="addReservation" parameterType="com.model.ReservationAddVo">
+		INSERT INTO reservation (hotel_seq, hrm_seq, cust_seq, personnel, hrm_count, add_date, first_date, last_date, etc, state) 
+				VALUES (#{hotel_seq}, #{hrm_seq}, #{cust_seq}, #{personnel}, #{hrm_count}, NOW(), TO_DATE(#{first_date}, 'YYYY-MM-DD'), TO_DATE(#{last_date}, 'YYYY-MM-DD'), #{etc}, #{state}) 
+	</insert>
+	
+	<!--
+	<insert id="addReservation" parameterType="com.model.ReservationAddVo">
+		INSERT INTO reservation (hotel_seq, hrm_seq, cust_seq, personnel, hrm_count, add_date, first_date, last_date, etc, state) 
+				SELECT #{hotel_seq}, #{hrm_seq}, #{cust_seq}, #{personnel}, #{hrm_count}, current_date, TO_DATE(#{first_date}, 'YYYY-MM-DD'), TO_DATE(#{last_date}, 'YYYY-MM-DD'), #{etc}, #{state} 
+			 WHERE NOT EXISTS (SELECT * FROM reservation WHERE hotel_seq=#{hotel_seq} AND hrm_seq=#{hrm_seq} AND cust_seq=#{cust_seq});
+	</insert>
+	 -->
+	
+	<!-- 예약 등록 - 일일 진행중.. -->
+	<!-- 
+	<insert  id="createReservation" parameterType="com.model.ReservationCusVo">
+		INSERT INTO reservation (hotel_seq, hrm_seq, cust_seq, reservation_name, guest_name, room_num, personnel, add_date, first_date, last_date, state) 
+				SELECT #{hotel_seq}, #{hrm_seq}, #{cust_seq}, #{reservation_name}, #{guest_name}, #{room_num}, #{personnel}, NOW(), #{first_date}, #{last_date}, #{state} 
+			FROM DUAL WHERE NOT EXISTS (SELECT * FROM reservation WHERE hotel_seq=#{hotel_seq} AND hrm_seq=#{hrm_seq} AND cust_seq=#{cust_seq});
+	</insert>
+	-->
+	
+	<!-- 예약 가능 날짜 검색 -->
+	<select id="periodSearch" parameterType="com.model.PeriodSearchVo" resultType="com.model.ReservationAddVo"> 
+		SELECT * FROM reservation 
+				WHERE state='예약완료' AND #{first_date} &gt;= last_date 
+						OR state='예약완료' AND first_date &lt;= #{last_date}
+	</select>
+	
+	<!-- 예약등록 - 기간 전체 -->
+	<insert id="addReservationRegistration" parameterType="com.model.ReservationAddVo">
+		INSERT INTO reservation (reserv_seq, hotel_seq, hrm_seq, cust_seq, reservation_name, room_num, personnel, first_date, last_date, etc, state)
+				VALUES (#{reserv_seq}, #{hotel_seq}, #{hrm_seq}, #{cust_seq}, #{reservation_name}, #{room_num}, #{personnel}, #{first_date}, #{last_date}, #{etc}, #{state})
+			
+			ON DUPLICATE KEY UPDATE reservation_name=#{reservation_name}, room_num=#{room_num}, personnel=#{personnel},
+					first_date=#{first_date}, last_date=#{last_date}, etc=#{etc}, state=#{state}
+	</insert>
+	
+	<!-- check in/out -->
+	<update id="checkInOut" parameterType="com.model.CheckInOutVo">
+		UPDATE reservation SET 
+				<if test="check_in_out == true">check_in=current_date </if>
+				<if test="check_in_out == false">check_out=current_date </if>
+				, state = #{state} 
+			WHERE hotel_seq=#{hotel_seq} AND hrm_seq=#{hrm_seq} AND cust_seq=#{cust_seq}  AND reserv_seq=#{reserv_seq} 
+	</update>
+	
+</mapper>

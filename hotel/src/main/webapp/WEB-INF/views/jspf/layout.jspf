@@ -1,0 +1,3 @@
+<%@ include file="/WEB-INF/views/jspf/head.jspf" %>
+<%@ include file="/WEB-INF/views/jspf/nav.jspf" %>
+<%@ include file="/WEB-INF/views/jspf/leftMenu.jspf" %>

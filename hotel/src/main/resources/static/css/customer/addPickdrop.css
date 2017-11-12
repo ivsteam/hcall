@@ -1,0 +1,40 @@
+body > .pageLayer { margin: 0 0 40px 0; }
+.message, .message1 { 
+	color: red;
+	font-size: 12px;
+	display: block; 
+	margin-bottom: 10px;
+}
+.btn { font-size: 12px; }
+.searchDiv{ display: none; }
+td span { cursor: pointer; }
+.addPickdrop b { 
+	font-weight: bold;
+	padding: 0px 15px;
+}
+.addPickdrop ul { display: inline-table; }
+.addPickdrop ul:nth-child(2n-1) { background-color: #d5d7db; }
+.addPickdrop li { height: 32px }
+
+.i_table tr{ border-bottom:1px solid #e2e2e2; }
+.i_table td, .i_table th{ 
+	border-right:1px solid #e2e2e2; 
+	padding: 5px 20px;
+	font-size: 12px; 
+}
+.i_table thead tr th{
+	vertical-align:middle; 
+	height:27px; 
+	background:#c68d7f;
+	color:#fff;
+	font-weight:600;
+}
+.i_table tbody tr:hover td{
+	background:#f4f4f4;
+}
+.i_table tbody tr td{
+	vertical-align:middle; 
+	height:27px; 
+	color:#7a7a7a;
+	text-align:center;
+}

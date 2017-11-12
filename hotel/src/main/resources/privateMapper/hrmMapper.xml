@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+ <!-- 171011 create = limitationOne  -->
+
+<mapper namespace="com.privateMapper.IHrmMapper">
+
+	<resultMap id="HrmImgVo" type="com.model.HrmImgVo">
+		<result column="hrm_seq"				property="hrm_seq"/>
+		<result column="path"					property="path"/>
+		<result column="file_Ori_name"		property="file_Ori__name"/>
+		<result column="file_Change_name"	property="file_Change_name"/>
+		<result column="file_Change_name"	property="file_Change_name"/>
+	</resultMap>
+	
+	<resultMap id="HrmVo" type="com.model.HrmVo">
+		<result column="hotel_seq"		property="hotel_seq"/>
+		<result column="hrm_seq"			property="hrm_seq"/>
+		<result column="hrm_name"		property="hrm_name"/>
+		<result column="guest_name"	property="guest_name"/>
+		<result column="personnel" 		property="personnel"/>
+		<result column="personnel_max"		property="personnel_max"/>
+		<result column="room_num"		property="room_num"/>
+		<result column="check_in"			property="check_in"/>
+		<result column="check_out"		property="check_out"/>
+		<result column="hrm_configuration"	property="hrm_configuration"/>
+		<result column="hrm_information"		property="hrm_information"/>
+		<result column="hrm_service"	property="hrm_service"/>
+		<result column="hrm_fee"			property="hrm_fee"/>
+		<result column="hrm_fee_type"	property="hrm_fee_type"/>
+		<result column="hrm_kinds"		property="hrm_kinds"/>
+		<result column="hrm_use"			property="hrm_use"/>
+		<result column="state"				property="state"/>
+		<collection property="hrmImgList" resultMap="HrmImgVo"></collection>
+	</resultMap>
+	
+	<!-- hotel reservation list -->
+	<select id="hrmList" parameterType="int" resultType="com.model.ReservationCusVo">
+		<![CDATA[
+			SELECT 
+					h.hrm_seq, h.state, h.hrm_kinds, h.room_num, a.* 
+					
+				FROM 
+					HRM h LEFT JOIN 
+						
+					 	(SELECT 
+								(r.last_date - r.first_date) term, 
+								c.cust_seq, c.cust_name, r.hrm_seq, r.guest_name, r.personnel, r.first_date, r.last_date, r.check_in, r.check_out, r.state 
+							
+							FROM reservation r 
+									LEFT JOIN customer c ON r.cust_seq = c.cust_seq 
+								
+								WHERE r.state = '예약완료' OR r.state = '체크인' OR r.state = '체크아웃' AND r.first_date > (current_date - 1)
+										ORDER BY r.first_date ASC 
+								
+						) a ON h.hrm_seq = a.hrm_seq 
+						
+							WHERE h.hotel_seq=#{hotel_seq} 
+								ORDER BY h.hrm_seq DESC
+		]]>
+						<!-- 
+							WHERE h.hotel_seq=#{hotel_seq} 
+								GROUP BY h.room_num 
+								ORDER BY h.hrm_seq DESC
+						 -->
+	</select>
+	
+	<select id="hrmSearchList" parameterType="com.model.CustomerVo" resultType="com.model.ReservationCusVo">
+		<![CDATA[
+			SELECT * FROM 
+				(SELECT r.*, c.cust_name, c.cust_pw, c.cust_phone, c.cust_email, c.cust_rating, c.signup_date 
+						FROM reservation r 
+								LEFT JOIN customer c ON r.cust_seq = c.cust_seq  AND c.hotel_seq = r.hotel_seq
+							
+							WHERE r.state = '예약완료' AND r.first_date > (current_date - INTERVAL 1 DAY) AND c.cust_name LIKE #{cust_name} 
+									OR r.state = '체크인' AND r.first_date > (current_date - INTERVAL 1 DAY) AND c.cust_name LIKE #{cust_name} 
+									OR r.state = '체크아웃' AND r.first_date > (current_date - INTERVAL 1 DAY) AND c.cust_name LIKE #{cust_name} 
+								ORDER BY r.firstDate ASC
+				) a LEFT JOIN HRM h ON a.hrm_seq = h.hrm_seq AND a.hotel_seq = h.hotel_seq
+		]]>
+	</select>
+	
+	<!-- hotel room _info list -->
+	<select id="hrmInfoList" parameterType="com.model.HrmVo" resultMap="HrmVo">
+		SELECT h.hrm_seq, i.img_seq, i.path, i.file_Ori_name, i.file_Change_name, h.hrm_kinds, h.hrm_name, h.personnel_max, h.hrm_fee, h.hrm_use
+				FROM HRM h LEFT JOIN HRMIMG i ON h.hrm_seq = i.hrm_seq
+			<where>
+				<if test="true">h.hotel_seq=#{hotel_seq}</if>
+				<if test="hrm_kinds != null and hrm_kinds != '#'.toString()">AND h.hrm_kinds=#{hrm_kinds}</if>
+				<if test="personnel != null">AND h.personnel_max>=#{personnel}</if>
+			</where>
+			ORDER BY h.hrm_seq DESC
+	</select>
+	
+	 <!-- check hotel _info -->
+	 <select id="checkHotelInfo" parameterType="int" resultType="int">
+	 	SELECT count(*) FROM HOTEL WHERE hotel_seq=#{hotel_seq}
+	 </select>
+	 
+	<!-- hotel _info -->
+	<select id="hotelInfo" parameterType="int" resultType="com.model.HotelVo">
+		SELECT * FROM HOTEL WHERE hotel_seq=#{hotel_seq}
+	</select>
+	
+	<!-- hotel room _info -->
+	<select id="hrmInfo" parameterType="com.model.HrmVo" resultMap="HrmVo">
+		SELECT * FROM HRM h LEFT JOIN HRMIMG i ON h.hrm_seq = i.hrm_seq
+				WHERE h.hrm_seq=#{hrm_seq}
+	</select>
+	
+	<!-- check _in/_out -->
+	<update id="checkInOut" parameterType="com.model.CheckInOutVo">
+		UPDATE reservation SET 
+				<if test="check_in_out == true">check_in=current_date </if>
+				<if test="check_in_out == false">check_out=current_date </if>
+				, state = #{state} 
+			WHERE hotel_seq=#{hotel_seq} AND cust_seq=#{cust_seq}
+	</update>
+	
+</mapper>
