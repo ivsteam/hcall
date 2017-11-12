@@ -1,4 +1,4 @@
-<img src="/images/hotelclicktocall.png" width="500">
+<img src="/images/hotelclicktocall.png" width="650">
 
 # What is the hcall service
 The hcall service is for non-English speaking hotel guests
