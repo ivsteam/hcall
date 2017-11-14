@@ -106,6 +106,7 @@
                         <tr>
                             <th>담당자 아이디</th>
                             <th>담당자명</th>
+                            <th>비밀번호</th>
                             <th>권한</th>
                             <th></th>
                         </tr>
@@ -115,6 +116,7 @@
                         <tr>
                             <td>${data.user_id}</td>
                             <td>${data.user_name}</td>
+                            <td>${data.user_pwd}</td>
                             <td>${data.user_auth}</td>
                             <td class="img_delet">
                                 <a href="javascript:fn_hotel_user_delete('${data.user_id}')" target="_self">삭제</a>
@@ -135,7 +137,7 @@
             </div>
         </div>
     </div>
-
+	${hotelUserList}
     <%@include file="/WEB-INF/views/include/footer.jsp" %>
 </form>
 </body>

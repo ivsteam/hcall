@@ -73,6 +73,8 @@ public class MyPageController {
     public String info(ModelMap map, HttpServletRequest request, @RequestParam Map<String,Object> params) {
         log.info("마이페이지 회원 정보 화면 시작");
         
+        EncodingUtil eu = new EncodingUtil();
+        
         Map<String, Object> userInfo = (Map<String, Object>) request.getSession().getAttribute("userInfo");
         params.put("userId", userInfo.get("user_id"));
 
@@ -81,6 +83,12 @@ public class MyPageController {
         
         params.put("uNo", userInfo.get("user_no"));
         List<Map<String, Object>> hotelUserList = userService.hotelUserInfo(params);
+        
+        // 복호화
+        for(int i=0 ; i < hotelUserList.size() ; ++i) {
+        	hotelUserList.get(i).put("user_pwd", eu.decrypt( (String) hotelUserList.get(i).get("user_pwd")));
+        }
+        
         map.put("hotelUserList", hotelUserList);
 
         log.info("마이페이지 회원 정보 화면 종료");
