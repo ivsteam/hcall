@@ -137,7 +137,7 @@
             </div>
         </div>
     </div>
-	${hotelUserList}
+	
     <%@include file="/WEB-INF/views/include/footer.jsp" %>
 </form>
 </body>
